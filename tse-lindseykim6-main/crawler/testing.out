@@ -1,0 +1,133 @@
+#testing by Lindsey Kim
+make clean
+make[1]: Entering directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/crawler'
+rm -f *~ *.o
+rm -rf *.dSYM
+rm -rf ../data
+rm -rf ../data/letters
+make[1]: Leaving directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/crawler'
+
+if [ -e "../data" ]
+then
+    rm -rf ../data
+fi
+mkdir -p ../data
+
+if [ -e "../data/incorrectArgs" ]
+then
+    rm -rf ../data/incorrectArgs
+fi
+mkdir ../data/incorrectArgs
+
+make crawler
+make[1]: Entering directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/crawler'
+gcc -Wall -pedantic -std=c11 -ggdb -I ../libcs50 -I../common   -c -o crawler.o crawler.c
+gcc -Wall -pedantic -std=c11 -ggdb -I ../libcs50 -I../common crawler.o ../common/pagedir.h ../common/pagedir.c ../libcs50/libcs50-given.a -o crawler
+make[1]: Leaving directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/crawler'
+# incorrect args
+# should return incorrect statements
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/incorrectArgs
+Incorrect arguments
+./crawler http://cs50tse.cs. ../data/incorrectARgs 2
+Unable to use seedURL
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../dat 2
+Could not open or write in page directory 
+Unable to initialize page directory
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/incorrectArgs 11
+maxDepth out of range
+if [ -e "../data/depths" ]
+then
+    rm -rf ../data/depths
+fi
+mkdir ../data/depths
+
+#crawl depths
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/depths 0
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/depths 1
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+0 Scannning: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/depths 2
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+0 Scannning: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+1 Scannning: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+2 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+1 Found: https://en.wikipedia.org/wiki/Algorithm
+1 IgnExtrn: https://en.wikipedia.org/wiki/Algorithm
+1 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+1 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+1 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+1 IgnDupl: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+
+if [ -e "../data/seed" ]
+then
+    rm -rf ../data/seed
+fi
+mkdir ../data/seed
+
+# different seed page
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/B.html ../data/seed 1
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+0 Scannning: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/E.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/D.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/C.html
+0 Found: https://en.wikipedia.org/wiki/Breadth-first_search
+0 IgnExtrn: https://en.wikipedia.org/wiki/Breadth-first_search
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/C.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/C.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/D.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/D.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/E.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/E.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+
+if [ -e "../data/wikipedia" ]
+then
+    rm -rf ../data/wikipedia
+fi
+mkdir ../data/wikipedia
+
+# wikipedia
+./crawler http://cs50tse.cs.dartmouth.edu/tse/wikipedia/ ../data/wikipedia 0
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/
+./crawler http://cs50tse.cs.dartmouth.edu/tse/wikipedia/ ../data/wikipedia 1
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/
+0 Scannning: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/Linked_list.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/Hash_table.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/Dartmouth_College.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/Unix.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/C_(programming_language).html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/Computer_science.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Computer_science.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Computer_science.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./C_(programming_language).html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./C_(programming_language).html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Unix.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Unix.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Dartmouth_College.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Dartmouth_College.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Hash_table.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Hash_table.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Linked_list.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/wikipedia/./Linked_list.html
+# ./crawler http://cs50tse.cs.dartmouth.edu/tse/wikipedia/ ../data/wikipedia 2
+
+# if [ -e "../data/bigdepth" ]
+# then
+#     rm -rf ../data/bigdepth
+# fi
+# mkdir ../data/bigdepth
+
+# big depth
+# ./crawler http://cs50tse.cs.dartmouth.edu/tse/wikipedia/ ../data/bigdepth 5
+

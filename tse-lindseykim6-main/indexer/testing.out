@@ -1,0 +1,145 @@
+#!/bin/bash
+
+# testing for indexer by Lindsey Kim
+
+if [ -e "../data" ]
+then
+    rm -rf ../data
+fi
+mkdir -p ../data
+
+if [ -e "../data/depths" ]
+then
+    rm -rf ../data/depths
+fi
+mkdir ../data/depths
+
+cd ..
+cd crawler
+make crawler
+make[1]: Entering directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/crawler'
+gcc -Wall -pedantic -std=c11 -ggdb -I ../libcs50 -I../common   -c -o crawler.o crawler.c
+gcc -Wall -pedantic -std=c11 -ggdb -I ../libcs50 -I../common crawler.o ../common/pagedir.c ../libcs50/libcs50-given.a -o crawler
+make[1]: Leaving directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/crawler'
+./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data/depths 2
+0 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+0 Scannning: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+1 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+1 Scannning: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+2 Fetched: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+0 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+0 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/A.html
+1 Found: https://en.wikipedia.org/wiki/Algorithm
+1 IgnExtrn: https://en.wikipedia.org/wiki/Algorithm
+1 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+1 Added: http://cs50tse.cs.dartmouth.edu/tse/letters/B.html
+1 Found: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+1 IgnDupl: http://cs50tse.cs.dartmouth.edu/tse/letters/index.html
+cd ..
+cd indexer
+make indexer
+make[1]: Entering directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/indexer'
+make[1]: 'indexer' is up to date.
+make[1]: Leaving directory '/thayerfs/home/f004r97/cs50-dev/tse-lindseykim6/indexer'
+
+# incorrect args
+# should return incorrect statements
+
+# no args
+./indexer
+Incorrect arguments
+
+# one arg
+./indexer ../data/depths 
+Incorrect arguments
+
+# three args
+./indexer ../data/depths indexFile indexFile2 
+Incorrect arguments
+
+# incorrect/nonexistent pageDirectory
+./indexer ../data/foo indexFile
+Could not open crawler file.
+Unable to use directory
+
+# invalid pageDirectory (not a crawler directory)
+mkdir ../data/foo
+./indexer ../data/foo indexFile
+Could not open crawler file.
+Unable to use directory
+
+#invalid indexFile (non-existent path)
+./indexer ../data/depths ../foo/foo
+Unable to open/write in index file
+
+#invalid indexFile (read-only directory)
+./indexer ../data/depths ../data
+Unable to open/write in index file
+
+# invalid indexFile (existing, read-only file)
+cat > foo <<EOF
+EOF
+chmod a-w foo
+./indexer ../data/depths foo
+Unable to open/write in index file
+
+rm -rf foo
+
+if [ -e "../data/outputs" ]
+then
+    rm -rf ../data/outputs
+fi
+mkdir ../data/outputs
+
+# correct run
+./indexer ../data/depths ../data/outputs/indexFile
+./indexer ~/cs50-dev/shared/tse/output/crawler/pages-letters-depth-3 ../data/outputs/indexFile2
+./indexer ~/cs50-dev/shared/tse/output/crawler/pages-letters-depth-10 ../data/outputs/indexFile3
+
+if [ -e "../data/outputs2" ]
+then
+    rm -rf ../data/outputs2
+fi
+mkdir ../data/outputs2
+
+# test using indextest and indexcmp, should print nothing
+./compiletest ../data/outputs/indexFile ../data/outputs2/indexFile
+~/cs50-dev/shared/tse/output/indexer/indexcmp ../data/outputs/indexFile ../data/outputs2/indexFile
+
+./compiletest ../data/outputs/indexFile2 ../data/outputs2/indexFile2
+~/cs50-dev/shared/tse/output/indexer/indexcmp ../data/outputs/indexFile2 ../data/outputs2/indexFile2
+
+./compiletest ../data/outputs/indexFile3 ../data/outputs2/indexFile3
+~/cs50-dev/shared/tse/output/indexer/indexcmp ../data/outputs/indexFile3 ../data/outputs2/indexFile3
+
+# valgrind 
+valgrind ./indexer ../data/depths ../data/outputs/indexFile
+==29051== Memcheck, a memory error detector
+==29051== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==29051== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==29051== Command: ./indexer ../data/depths ../data/outputs/indexFile
+==29051== 
+==29051== 
+==29051== HEAP SUMMARY:
+==29051==     in use at exit: 0 bytes in 0 blocks
+==29051==   total heap usage: 553 allocs, 553 frees, 74,139 bytes allocated
+==29051== 
+==29051== All heap blocks were freed -- no leaks are possible
+==29051== 
+==29051== For counts of detected and suppressed errors, rerun with: -v
+==29051== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+valgrind ./compiletest ../data/outputs/indexFile ../data/outputs2/indexFile
+==29064== Memcheck, a memory error detector
+==29064== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==29064== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==29064== Command: ./compiletest ../data/outputs/indexFile ../data/outputs2/indexFile
+==29064== 
+==29064== 
+==29064== HEAP SUMMARY:
+==29064==     in use at exit: 0 bytes in 0 blocks
+==29064==   total heap usage: 78 allocs, 78 frees, 19,321 bytes allocated
+==29064== 
+==29064== All heap blocks were freed -- no leaks are possible
+==29064== 
+==29064== For counts of detected and suppressed errors, rerun with: -v
+==29064== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
