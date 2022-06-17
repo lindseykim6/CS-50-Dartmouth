@@ -1,0 +1,78 @@
+#!/bin/bash
+# zero arguments
+./chill
+  Temp   Wind  Chill
+ -----  -----  -----
+ -10.0    5.0  -22.3
+ -10.0   10.0  -28.3
+ -10.0   15.0  -32.2
+
+   0.0    5.0  -10.5
+   0.0   10.0  -15.9
+   0.0   15.0  -19.4
+
+  10.0    5.0    1.2
+  10.0   10.0   -3.5
+  10.0   15.0   -6.6
+
+  20.0    5.0   13.0
+  20.0   10.0    8.9
+  20.0   15.0    6.2
+
+  30.0    5.0   24.7
+  30.0   10.0   21.2
+  30.0   15.0   19.0
+
+  40.0    5.0   36.5
+  40.0   10.0   33.6
+  40.0   15.0   31.8
+
+# one argument
+./chill 32
+  Temp   Wind  Chill
+ -----  -----  -----
+  32.0    5.0   27.1
+  32.0   10.0   23.7
+  32.0   15.0   21.6
+./chill -10
+  Temp   Wind  Chill
+ -----  -----  -----
+ -10.0    5.0  -22.3
+ -10.0   10.0  -28.3
+ -10.0   15.0  -32.2
+./chill 0
+  Temp   Wind  Chill
+ -----  -----  -----
+   0.0    5.0  -10.5
+   0.0   10.0  -15.9
+   0.0   15.0  -19.4
+# one argument where temperature is too large
+./chill 51
+./chill: Temperature must be less than 50.0 degrees Fahrenheit and greater than -99.0 degrees Fahrenheit.
+# one argument where temperature is too small
+./chill -100
+./chill: Temperature must be less than 50.0 degrees Fahrenheit and greater than -99.0 degrees Fahrenheit.
+# two arguments
+./chill 32.5 10
+  Temp   Wind  Chill
+ -----  -----  -----
+  32.5   10.0   24.3
+./chill 10 0.5
+  Temp   Wind  Chill
+ -----  -----  -----
+  10.0    0.5   13.8
+# two arguments where temperature is out of range
+./chill 77 10
+./chill: Temperature must be less than 50.0 degrees Fahrenheit and greater than -99.0 degrees Fahrenheit.
+./chill -101 15
+./chill: Temperature must be less than 50.0 degrees Fahrenheit and greater than -99.0 degrees Fahrenheit.
+# two arguments where wind is out of range
+./chill 40 0.2
+./chill: Wind velocity must be greater than or equal to 0.5 MPH.
+# two arguments where wind and temperature are both out of range
+./chill 1000 0
+./chill: Temperature must be less than 50.0 degrees Fahrenheit and greater than -99.0 degrees Fahrenheit.
+./chill: Wind velocity must be greater than or equal to 0.5 MPH.
+# too many arguments
+./chill 5 10 15
+usage: ./chill; too many arguments 

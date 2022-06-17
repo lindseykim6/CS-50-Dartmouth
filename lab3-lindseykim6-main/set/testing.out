@@ -1,0 +1,31 @@
+gcc -Wall -pedantic -std=c11 -ggdb   -c -o set.o set.c
+gcc -Wall -pedantic -std=c11 -ggdb set.o ../lib/mem.o settest.c -o settest
+./settest
+Create first set...
+
+Test insert...
+test with null set, good key, and good item...
+test with null key..
+test with null item..
+test with null item and key..
+test with null bag, null item, null key
+test with valid set, item, and key..
+test with repeated key..
+
+testing set_find..
+testing set_find with NULL key..
+
+testing set printing with valid arguments..
+{Printing key=value : f006t59=Joanna}
+testing set printing with NULL set (should print (null))..
+(null)
+testing set printing with NULL file (should print nothing).. 
+
+testing set printing with NULL function (should print a set with no items).. 
+{}
+
+testing set_iterate... 
+
+testing delete...
+
+Success!

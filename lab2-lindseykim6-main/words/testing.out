@@ -1,0 +1,195 @@
+#!/bin/bash
+cat > example <<EOF
+alpha cat dog love2animals555a lot
+bravo
+charlie
+EOF
+
+# tests with a file
+./words example
+alpha
+cat
+dog
+love
+animals
+a
+lot
+bravo
+charlie
+
+cat > example2 <<EOF
+Write a C program called words that breaks its input into a series of words, one per line. 
+It may take input from stdin, or from files whose names are listed as arguments.
+!!!!!CS50!!!!
+EOF
+
+# tests with two files
+./words example example2
+alpha
+cat
+dog
+love
+animals
+a
+lot
+bravo
+charlie
+Write
+a
+C
+program
+called
+words
+that
+breaks
+its
+input
+into
+a
+series
+of
+words
+one
+per
+line
+It
+may
+take
+input
+from
+stdin
+or
+from
+files
+whose
+names
+are
+listed
+as
+arguments
+CS
+
+cat > foo <<EOF
+We love watching television in the morning! I like cows a lot. This is very fun.
+anyways
+what
+is 
+up
+EOF
+
+# tests with two files and special file -
+./words example - example2 < foo
+alpha
+cat
+dog
+love
+animals
+a
+lot
+bravo
+charlie
+We
+love
+watching
+television
+in
+the
+morning
+I
+like
+cows
+a
+lot
+This
+is
+very
+fun
+anyways
+what
+is
+up
+Write
+a
+C
+program
+called
+words
+that
+breaks
+its
+input
+into
+a
+series
+of
+words
+one
+per
+line
+It
+may
+take
+input
+from
+stdin
+or
+from
+files
+whose
+names
+are
+listed
+as
+arguments
+CS
+
+# tests with no file
+./words < foo
+We
+love
+watching
+television
+in
+the
+morning
+I
+like
+cows
+a
+lot
+This
+is
+very
+fun
+anyways
+what
+is
+up
+
+#tests with special file -, should be the same as above
+./words - < foo
+We
+love
+watching
+television
+in
+the
+morning
+I
+like
+cows
+a
+lot
+This
+is
+very
+fun
+anyways
+what
+is
+up
+
+#tests with incorrect filename
+./words nullfile
+usage: ./words nullfile; could not open file 
+

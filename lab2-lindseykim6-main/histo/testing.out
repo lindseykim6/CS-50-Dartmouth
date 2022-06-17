@@ -1,0 +1,113 @@
+#!/bin/bash
+cat > foo <<EOF
+3 -4 5 1 7 0
+8 0 15 12 3 5
+1 2 2 2 1 3
+EOF
+
+# test case 1
+./histo < foo
+16 bins of size 1 for range [0,16)
+[  0:   0]**
+[  1:   1]***
+[  2:   2]***
+[  3:   3]***
+[  4:   4]
+[  5:   5]**
+[  6:   6]
+[  7:   7]*
+[  8:   8]*
+[  9:   9]
+[ 10:  10]
+[ 11:  11]
+[ 12:  12]*
+[ 13:  13]
+[ 14:  14]
+[ 15:  15]*
+
+cat > foo2 <<EOF
+3 1 2 5 3 3 3 3
+17
+32
+63
+5
+10
+1
+-7
+EOF
+
+# test case 2 (expands bins one at a time)
+./histo < foo2
+16 bins of size 1 for range [0,16)
+16 bins of size 2 for range [0,32)
+16 bins of size 4 for range [0,64)
+[  0:   3]********
+[  4:   7]**
+[  8:  11]*
+[ 12:  15]
+[ 16:  19]*
+[ 20:  23]
+[ 24:  27]
+[ 28:  31]
+[ 32:  35]*
+[ 36:  39]
+[ 40:  43]
+[ 44:  47]
+[ 48:  51]
+[ 52:  55]
+[ 56:  59]
+[ 60:  63]*
+
+cat > foo3 <<EOF
+200
+10
+1
+EOF
+
+# test case 3 (expands bins all at once)
+./histo < foo3
+16 bins of size 1 for range [0,16)
+16 bins of size 2 for range [0,32)
+16 bins of size 4 for range [0,64)
+16 bins of size 8 for range [0,128)
+16 bins of size 16 for range [0,256)
+[  0:  15]**
+[ 16:  31]
+[ 32:  47]
+[ 48:  63]
+[ 64:  79]
+[ 80:  95]
+[ 96: 111]
+[112: 127]
+[128: 143]
+[144: 159]
+[160: 175]
+[176: 191]
+[192: 207]*
+[208: 223]
+[224: 239]
+[240: 255]
+
+# test case 4 (given)
+echo {1..16} 150 | ./histo
+16 bins of size 1 for range [0,16)
+16 bins of size 2 for range [0,32)
+16 bins of size 4 for range [0,64)
+16 bins of size 8 for range [0,128)
+16 bins of size 16 for range [0,256)
+[  0:  15]***************
+[ 16:  31]*
+[ 32:  47]
+[ 48:  63]
+[ 64:  79]
+[ 80:  95]
+[ 96: 111]
+[112: 127]
+[128: 143]
+[144: 159]*
+[160: 175]
+[176: 191]
+[192: 207]
+[208: 223]
+[224: 239]
+[240: 255]

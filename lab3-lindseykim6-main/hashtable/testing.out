@@ -1,0 +1,240 @@
+gcc -Wall -pedantic -std=c11 -ggdb   -c -o hashtable.o hashtable.c
+hashtable.c: In function 'hashtable_new':
+hashtable.c:30:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+gcc -Wall -pedantic -std=c11 -ggdb   -c -o ../hashtable/hash.o ../hashtable/hash.c
+gcc -Wall -pedantic -std=c11 -ggdb hashtable.o ../lib/mem.o ../set/set.o ../hashtable/hash.o hashtabletest.c -o hashtabletest 
+hashtabletest.c: In function 'main':
+hashtabletest.c:66:8: warning: implicit declaration of function 'strcmp' [-Wimplicit-function-declaration]
+     if(strcmp(hashtable_find(hashtable1, "f006t59"), "Joanna")!=0){
+        ^~~~~~
+./hashtabletest
+Create first hashtable...
+
+Test insert...
+test with null set, good key, and good item...
+test with null key..
+test with null item..
+test with null item and key..
+test with null bag, null item, null key
+test with valid hashtable, item, and key..
+test with repeated key..
+
+testing hashtable_find..
+testing hashtable_find with NULL key..
+
+testing hashtable printing with valid arguments..
+{
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{}
+{Printing key=value : f006t59=Joanna}
+{}
+{}
+{}
+{}
+{}
+{}
+{}}
+testing hashtable printing with NULL hashtable (should print (null))..
+(null)
+testing hashtable printing with NULL file (should print nothing).. 
+
+testing hashtable printing with NULL function (should print a hashtable with no items).. 
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+testing hashtable_iterate... 
+
+testing delete...
+
+Success!

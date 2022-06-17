@@ -1,0 +1,35 @@
+gcc -Wall -pedantic -std=c11 -ggdb   -c -o counters.o counters.c
+gcc -Wall -pedantic -std=c11 -ggdb counters.o ../lib/mem.o counterstest.c -o counterstest
+./counterstest
+Create first counters...
+
+test add...
+test with null set, good key
+test with negative key..
+test with null set, negative key..
+test with valid key and countset
+
+test counters_get with null countset..
+
+test counters_get with nonexisting key..
+
+test counters_get with existing key..
+testing counters_set with invalid count..
+testing counters_set with invalid key..
+testing counters_set with NULL set..
+testing counters_set with valid args..
+testing counters_set with an existing key..
+
+testing counters printing with valid arguments..
+{20=8,7=8}
+testing counters printing with NULL countset (should print (null))..
+(null)testing counters printing with NULL file (should print nothing).. 
+
+
+testing counters_iterate... 
+20:8
+7:8
+
+testing delete...
+
+Success!
